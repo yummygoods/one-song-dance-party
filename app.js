@@ -1,10 +1,9 @@
 
+// function playMusic(){
 
-function playMusic(){
-  
-  console.log("🦄 you're a god damn unicorn");
-}
-let button = document.getElementById("dance-button");
+//   console.log("🦄 you're a god damn unicorn");
+// }
+// let button = document.getElementById("dance-button");
 
-button.addEventListener("click", playMusic);
+// button.addEventListener("click", playMusic);
 

@@ -8,11 +8,9 @@
 		<link href="styles.css" rel="stylesheet" type="text/css" />
 
 		<script src="app.js" defer></script>
-		
 	</head>
 
 	<body>
-
 		<header>
 			<nav>
 				<h1 id="title">one song dance party</h1>
@@ -23,19 +21,64 @@
 				</ul> -->
 			</nav>
 		</header>
-<main>
-	<h2>feeling <span>🦀</span> crabby?</h2>
-	
-	<script src="https://sdk.scdn.co/spotify-player.js" ></script>
-	<button id="dance-button"  type="button">dance it out</button>
-</main>
+		<main>
+			<h2>feeling <span>🦀</span> crabby?</h2>
 
+			<script src="https://sdk.scdn.co/spotify-player.js"></script>
+			<script>
+				window.onSpotifyWebPlaybackSDKReady = () => {
+					console.log('You can now initialize Spotify.Player and use the SDK');
+				};
+			</script>
+			<script>
+				window.onSpotifyWebPlaybackSDKReady = () => {
+					const token =
+						'BQDQK0EAwIDnQsa6lJ-FKnaiDgWN1MY7XbJZ5YCdcq9PUNg_Ic8ZwcCmpg-7aRU_5oLWF_ABLoisteGcrMT3vMX_5rJXldl_fZuHKuf-LdihkW4D1Nh1U-aA1PdnFfVu6N6V8321VaVnPRD7UK9FmqNz7gqpANdfnbC_wUwW66ywXhyMvuUflwNZYCPiREVhFaFb';
+					const player = new Spotify.Player({
+						name: 'Web Playback SDK Quick Start Player',
+						getOAuthToken: (cb) => {
+							cb(token);
+						},
+						volume: 0.5,
+					});
+					console.log(player);
+				};
 
-		
+				// Ready
+				player.addListener('ready', ({ device_id }) => {
+					console.log('Ready with Device ID', device_id);
+				});
 
+				// Not Ready
+				player.addListener('not_ready', ({ device_id }) => {
+					console.log('Device ID has gone offline', device_id);
+				});
 
-		<footer class="container">
+				player.addListener('initialization_error', ({ message }) => {
+					console.error(message);
+				});
 
-		</footer>
+				player.addListener('authentication_error', ({ message }) => {
+					console.error(message);
+				});
+
+				player.addListener('account_error', ({ message }) => {
+					console.error(message);
+				});
+
+				player.connect();
+				document.getElementById('togglePlay').onclick = function () {
+					player.togglePlay();
+				};
+
+				player.setName('one song dance party').then(() => {
+					console.log('Player name updated!');
+				});
+			</script>
+			<!-- <button id="dance-button"  type="button">dance it out</button> -->
+			<button id="togglePlay">start/stop</button>
+		</main>
+
+		<footer class="container"></footer>
 	</body>
 </html>
